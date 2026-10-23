@@ -28,9 +28,9 @@ public partial class SettingsView : UserControl
                 UpdateStatusText.Text = $"Version {update.Version} available";
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // Silent — don't bother the user if the check fails on page load
+            // Silent, don't bother the user if the check fails on page load
         }
     }
 

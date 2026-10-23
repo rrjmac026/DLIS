@@ -31,6 +31,8 @@ public partial class MainView : UserControl
     private FeedbackInboxView?    _feedbackInboxView;
     private SettingsView?         _settingsView;
 
+    
+
     public event Action? LogoutRequested;
 
     public MainView(ApiUser user, ApiClient api)
@@ -59,13 +61,13 @@ public partial class MainView : UserControl
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        ConfigureSidebar();      // MainView.Sidebar.cs
-        StartUpdateChecks();     // MainView.Updates.cs
+        ConfigureSidebar();
+        StartUpdateChecks();
 
         SyncTheme(ThemeService.IsDark);
         ShowDashboard();
 
-        ShowUpdateCompleteNotice();   // MainView.Updates.cs
+        ShowUpdateCompleteNotice();
     }
 
     // ── Page navigation ─────────────────────────────────────────

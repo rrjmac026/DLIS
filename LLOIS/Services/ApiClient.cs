@@ -39,6 +39,24 @@ public class ApiClient
         _http.DefaultRequestHeaders.Authorization = null;
     }
 
+    /// <summary>
+    /// Wakes a sleeping host (e.g. Render free tier). Returns true as soon as the
+    /// server answers with any HTTP response; false on network failure or timeout.
+    /// </summary>
+    public async Task<bool> PingAsync(int timeoutSeconds = 90)
+    {
+        try
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSeconds));
+            using var response = await _http.GetAsync("/", HttpCompletionOption.ResponseHeadersRead, cts.Token);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public async Task<LoginResult> LoginAsync(string username, string password)
     {
         var response = await _http.PostAsJsonAsync("api/login", new { username, password }, JsonOptions);

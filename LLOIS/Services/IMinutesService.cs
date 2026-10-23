@@ -13,6 +13,7 @@ public class MinutesInput
 {
     // Laravel only accepts "Regular Session" or "Special Session".
     public string SessionType { get; set; } = string.Empty;
+    public int? SessionNumber { get; set; }
     public DateOnly? Date { get; set; }
 
     // Local file path of a newly picked PDF/DOC/DOCX to upload with this request.
@@ -24,8 +25,13 @@ public class ApiMinutes
 {
     public int Id { get; set; }
     public string SessionType { get; set; } = string.Empty;
+    public int? SessionNumber { get; set; }
     public DateOnly? Date { get; set; }
     public string? DocumentPath { get; set; }
+
+    // "No. 12 · Regular Session", or just the session type when no number is set.
+    public string DisplayTitle =>
+        SessionNumber is int n ? $"No. {n} · {SessionType}" : SessionType;
 }
 
 // Laravel's show() returns { "minutes": {...}, "document_url": "..." },

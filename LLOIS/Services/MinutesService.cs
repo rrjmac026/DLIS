@@ -33,6 +33,8 @@ public class MinutesService(ApiClient api) : IMinutesService
         using var content = new MultipartFormDataContent();
 
         content.Add(new StringContent(input.SessionType), "session_type");
+        // Always sent ("" when null) so it can be cleared on edit; Laravel turns "" into null.
+        content.Add(new StringContent(input.SessionNumber?.ToString() ?? ""), "session_number");
         // Always sent ("" when null) so a date can be cleared on edit; Laravel turns "" into null.
         content.Add(new StringContent(input.Date?.ToString("yyyy-MM-dd") ?? ""), "date");
 

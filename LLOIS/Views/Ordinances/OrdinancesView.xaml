@@ -119,9 +119,11 @@
 
                                     <TextBlock Grid.Row="2"
                                             Text="{Binding Title}"
+                                            ToolTip="{Binding Title}"
                                             FontSize="12"
                                             Foreground="{DynamicResource TextPrimaryBrush}"
-                                            TextWrapping="NoWrap"
+                                            TextWrapping="Wrap"
+                                            MaxHeight="54"
                                             TextTrimming="CharacterEllipsis"/>
 
                                     <StackPanel Grid.Row="4" Orientation="Horizontal">
@@ -206,11 +208,16 @@
                                 <TextBlock x:Name="DetailId"
                                            FontSize="11" FontWeight="SemiBold"
                                            Foreground="{DynamicResource HeroNumFgBrush}"/>
-                                <TextBlock x:Name="DetailSubject"
+                                <TextBlock x:Name="DetailTitle"
                                            FontSize="16" FontWeight="SemiBold"
                                            Foreground="{DynamicResource HeroTitleFgBrush}"
                                            TextWrapping="Wrap"
                                            Margin="0,6,0,0"/>
+                                <TextBlock x:Name="DetailSubject"
+                                           FontSize="13"
+                                           Foreground="{DynamicResource HeroSubjectFgBrush}"
+                                           TextWrapping="Wrap"
+                                           Margin="0,8,0,0"/>
                                 <TextBlock x:Name="DetailSeries"
                                            FontSize="12"
                                            Foreground="{DynamicResource HeroSubjectFgBrush}"
@@ -324,6 +331,7 @@
                                                 Padding="12,10">
                                             <StackPanel>
                                                 <TextBlock FontWeight="SemiBold" FontSize="12"
+                                                           TextWrapping="Wrap"
                                                            Foreground="{DynamicResource TextPrimaryBrush}">
                                                     <Run Text="Version "/>
                                                     <Run Text="{Binding VersionNumber}"/>

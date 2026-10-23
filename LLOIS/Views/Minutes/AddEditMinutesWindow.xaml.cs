@@ -3,6 +3,7 @@ namespace LLOIS.Views;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Win32;
 using LLOIS.Services;
 
@@ -40,6 +41,7 @@ public partial class AddEditMinutesWindow : Window
         WindowTitle.Text = "✏️ Edit Minutes";
 
         SetComboByContent(SessionTypeCombo, existing.SessionType);
+        SessionNumberBox.Text = existing.SessionNumber?.ToString() ?? "";
         if (existing.Date.HasValue)
             DatePickerControl.SelectedDate = existing.Date.Value.ToDateTime(TimeOnly.MinValue);
         FilePathBox.Text = existing.DocumentPath ?? "";
@@ -52,6 +54,12 @@ public partial class AddEditMinutesWindow : Window
             if (item.Content?.ToString() == content)
             { combo.SelectedItem = item; return; }
         }
+    }
+
+    // Digits only.
+    private void SessionNumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+        e.Handled = e.Text.Any(c => !char.IsDigit(c));
     }
 
     // ── File selection (upload happens on Save) ─────────────────
@@ -104,9 +112,12 @@ public partial class AddEditMinutesWindow : Window
         SaveBtn.IsEnabled = false;
         try
         {
+            var numberText = SessionNumberBox.Text.Trim();
+
             var input = new MinutesInput
             {
                 SessionType = (SessionTypeCombo.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "",
+                SessionNumber = numberText.Length > 0 ? int.Parse(numberText) : null,
                 Date = DatePickerControl.SelectedDate.HasValue
                     ? DateOnly.FromDateTime(DatePickerControl.SelectedDate.Value) : null,
                 LocalDocumentPath = _localDocumentPath
@@ -137,6 +148,11 @@ public partial class AddEditMinutesWindow : Window
         HideError();
         if (SessionTypeCombo.SelectedItem is null)
             return ShowError("Session Type is required.");
+
+        var numberText = SessionNumberBox.Text.Trim();
+        if (numberText.Length > 0 && (!int.TryParse(numberText, out var n) || n < 1))
+            return ShowError("Session Number must be a whole number of 1 or more.");
+
         return true;
     }
 

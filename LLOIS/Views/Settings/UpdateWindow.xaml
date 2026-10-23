@@ -1,0 +1,11 @@
+<Window x:Class="LLOIS.UpdateWindow" Title="Update available" Width="420" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <StackPanel Margin="24">
+        <TextBlock x:Name="TitleText" FontSize="18" FontWeight="SemiBold"/>
+        <TextBlock x:Name="NotesText" Margin="0,12,0,0" TextWrapping="Wrap"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button x:Name="LaterButton" Content="Later" Width="90" Margin="0,0,8,0" Click="Later_Click"/>
+            <Button Content="Update now" Width="110" IsDefault="True" Click="Update_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

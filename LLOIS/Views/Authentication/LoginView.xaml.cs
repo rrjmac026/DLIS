@@ -1,9 +1,11 @@
 ﻿namespace LLOIS.Views;
 
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using LLOIS.Services;
 
 public partial class LoginView : UserControl
@@ -18,6 +20,26 @@ public partial class LoginView : UserControl
         InitializeComponent();
         _api = api;
         _auth = new AuthService(api);
+
+        Loaded += async (_, _) => await WakeServerAsync();
+    }
+
+    // Fires a quiet request so a sleeping Render instance starts waking up
+    // while the user types their credentials.
+    private async Task WakeServerAsync()
+    {
+        SetStatus("#FBBF24", "Connecting to server…");
+
+        var ok = await _api.PingAsync();
+
+        if (ok) SetStatus("#34D399", "System online — Secure portal");
+        else    SetStatus("#F87171", "Server unreachable — check your connection");
+    }
+
+    private void SetStatus(string colorHex, string text)
+    {
+        StatusDot.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString(colorHex)!;
+        StatusText.Text = text;
     }
 
     private async void TryLogin()
@@ -66,6 +88,19 @@ public partial class LoginView : UserControl
     }
 
     private void LoginButton_Click(object sender, RoutedEventArgs e) => TryLogin();
+
+    private void WebVersionButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo(AppConfig.ApiBaseUrl) { UseShellExecute = true });
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Could not open the web version:\n{ex.Message}", "Error",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
 
     private void Field_KeyDown(object sender, KeyEventArgs e)
     {

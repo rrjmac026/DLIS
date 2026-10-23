@@ -1,7 +1,7 @@
 <Window x:Class="LLOIS.Views.AddEditMinutesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Add Minutes" Height="440" Width="480"
+        Title="Add Minutes" Height="500" Width="480"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
         Background="{DynamicResource BgPrimaryBrush}">
 
@@ -116,6 +116,13 @@
                 <ComboBoxItem Content="Regular Session"/>
                 <ComboBoxItem Content="Special Session"/>
             </ComboBox>
+
+            <TextBlock Text="Session Number" Style="{StaticResource Label}" Margin="{StaticResource FieldGap}"/>
+            <TextBox x:Name="SessionNumberBox" Height="34"
+                     Style="{StaticResource PlaceholderTextBox}"
+                     Tag="e.g. 12"
+                     MaxLength="6"
+                     PreviewTextInput="SessionNumberBox_PreviewTextInput"/>
 
             <TextBlock Text="Date" Style="{StaticResource Label}" Margin="{StaticResource FieldGap}"/>
             <DatePicker x:Name="DatePickerControl" Height="34"/>

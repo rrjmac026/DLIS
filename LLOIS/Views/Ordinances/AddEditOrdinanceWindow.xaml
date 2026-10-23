@@ -223,9 +223,12 @@
                             <TextBlock Style="{StaticResource Label}">
                                 Title <Run Text="*" Style="{StaticResource ReqMark}"/>
                             </TextBlock>
-                            <TextBox x:Name="TitleBox" Height="34"
-                                     Style="{StaticResource PlaceholderTextBox}"
-                                     Tag="Official title of the ordinance"/>
+                            <TextBox x:Name="TitleBox" Height="64"
+                                    Style="{StaticResource PlaceholderTextBox}"
+                                    Tag="Official title of the ordinance"
+                                    TextWrapping="Wrap" AcceptsReturn="True"
+                                    VerticalScrollBarVisibility="Auto"
+                                    Padding="8,8"/>
                         </StackPanel>
 
                         <StackPanel Margin="{StaticResource FieldGap}">
@@ -409,9 +412,12 @@
                             <TextBlock Style="{StaticResource Label}" Margin="0,0,0,5">
                                 Version Title <Run Text="*" Style="{StaticResource ReqMark}"/>
                             </TextBlock>
-                            <TextBox x:Name="VersionTitleBox" Height="34"
-                                     Style="{StaticResource PlaceholderTextBox}"
-                                     Tag="Title for Version 1"/>
+                            <TextBox x:Name="VersionTitleBox" Height="64"
+                                Style="{StaticResource PlaceholderTextBox}"
+                                Tag="Title for Version 1"
+                                TextWrapping="Wrap" AcceptsReturn="True"
+                                VerticalScrollBarVisibility="Auto"
+                                Padding="8,8"/>
 
                             <TextBlock Style="{StaticResource Label}" Margin="{StaticResource FieldGap}">
                                 Content / Summary <Run Text="*" Style="{StaticResource ReqMark}"/>

@@ -74,7 +74,8 @@ public partial class MinutesView : UserControl
             {
                 var q = _searchQuery;
                 results = results.Where(m =>
-                    m.SessionType?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false).ToList();
+                    (m.SessionType?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false)
+                    || (m.SessionNumber?.ToString().Contains(q) ?? false)).ToList();
             }
 
             if (SessionTypeFilter.SelectedItem is ComboBoxItem { Content: string type }
@@ -255,13 +256,14 @@ public partial class MinutesView : UserControl
         InlineEditBtn.Visibility     = writeVisibility;
         InlineOpenFileBtn.Visibility = !string.IsNullOrEmpty(m.DocumentPath) ? Visibility.Visible : Visibility.Collapsed;
 
-        DetailId.Text          = m.SessionType;
+        DetailId.Text          = m.SessionNumber is int n ? $"SESSION NO. {n}" : m.SessionType;
         DetailSessionType.Text = m.SessionType;
         DetailDate.Text        = m.Date?.ToString("MMMM dd, yyyy") ?? "No date set";
 
         FileBadge.Visibility = !string.IsNullOrEmpty(m.DocumentPath) ? Visibility.Visible : Visibility.Collapsed;
 
         MetadataGrid.Children.Clear();
+        AddMetaCell(m.SessionNumber?.ToString() ?? "—", "Session no.");
         AddMetaCell(m.SessionType, "Session type");
         AddMetaCell(m.Date?.ToString("MMMM dd, yyyy") ?? "—", "Date");
     }

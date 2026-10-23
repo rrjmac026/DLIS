@@ -8,7 +8,7 @@ using LLOIS.Views;
 
 public partial class App : Application
 {
-    public const string CurrentVersion = "1.3.6";
+    public const string CurrentVersion = "2.1.1";
 
     protected override void OnStartup(StartupEventArgs e)
     {

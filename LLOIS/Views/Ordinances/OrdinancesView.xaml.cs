@@ -276,6 +276,7 @@ public partial class OrdinancesView : UserControl
         InlineOpenPdfBtn.Visibility  = o.DocumentPath is not null ? Visibility.Visible : Visibility.Collapsed;
 
         DetailId.Text      = $"{o.OrdinanceNumber}  ·  {o.SeriesNumber}";
+        DetailTitle.Text   = o.Title;
         DetailSubject.Text = o.Subject;
         DetailSeries.Text  = $"{o.Type}  ·  Sponsor: {o.Sponsor}";
         VersionCountLabel.Text = $"  {o.Versions.Count} version{(o.Versions.Count == 1 ? "" : "s")}";

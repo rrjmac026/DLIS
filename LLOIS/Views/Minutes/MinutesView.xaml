@@ -92,8 +92,9 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Grid.Row="0"
-                                            Text="{Binding SessionType}"
+                                            Text="{Binding DisplayTitle}"
                                             FontSize="12" FontWeight="SemiBold"
+                                            TextWrapping="Wrap"
                                             Foreground="{DynamicResource TextPrimaryBrush}"/>
 
                                     <TextBlock Grid.Row="2"

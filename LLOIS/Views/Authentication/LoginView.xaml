@@ -69,6 +69,37 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Secondary "ghost" button: glass outline, brightens on hover -->
+        <Style x:Key="GlassGhostButton" TargetType="Button">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="#B0FFFFFF"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="12"
+                                Background="Transparent"
+                                BorderBrush="#25FFFFFF" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#14FFFFFF"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#503B82F6"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -146,14 +177,14 @@
                         HorizontalAlignment="Center" TextAlignment="Center"
                         TextWrapping="Wrap" Margin="0,0,0,20"/>
 
-                <!-- Status pill -->
+                <!-- Status pill (updated by PingAsync on load) -->
                 <Border CornerRadius="20" Background="#12FFFFFF"
                         BorderBrush="#1AFFFFFF" BorderThickness="1"
                         Padding="12,5" HorizontalAlignment="Center" Margin="0,0,0,28">
                     <StackPanel Orientation="Horizontal">
-                        <Ellipse Width="7" Height="7" Fill="#34D399"
+                        <Ellipse x:Name="StatusDot" Width="7" Height="7" Fill="#FBBF24"
                                  VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <TextBlock Text="System online — Secure portal"
+                        <TextBlock x:Name="StatusText" Text="Connecting to server…"
                                    Foreground="#80FFFFFF" FontSize="11"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
@@ -216,6 +247,33 @@
                     </Button.Template>
                     <TextBlock Text="Sign in →" Foreground="White"
                                FontSize="15" FontWeight="SemiBold"/>
+                </Button>
+
+                <!-- ═══ Divider ═══ -->
+                <Grid Margin="0,18,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Height="1" Background="#1AFFFFFF"
+                            VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="or" Foreground="#50FFFFFF"
+                               FontSize="11" Margin="12,0"/>
+                    <Border Grid.Column="2" Height="1" Background="#1AFFFFFF"
+                            VerticalAlignment="Center"/>
+                </Grid>
+
+                <!-- ═══ Web version button ═══ -->
+                <Button x:Name="WebVersionButton"
+                        Style="{StaticResource GlassGhostButton}"
+                        Click="WebVersionButton_Click"
+                        ToolTip="Opens the DLIS web version in your browser">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🌐" FontSize="14" Margin="0,0,8,0"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock Text="Open web version" VerticalAlignment="Center"/>
+                    </StackPanel>
                 </Button>
 
                 <TextBlock Text="© 2026 LGU Damulog, Bukidnon — All rights reserved"
